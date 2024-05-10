@@ -136,16 +136,18 @@ static char* removeSequence(char* sourcePtr, char c)
 */
 static char* safeStrCpy(char* dest, char* destEnd, const char* source)
 {
-   int len = (int)strlen(source);
-   if (len <= (destEnd - dest)) {
+   size_t space = destEnd - dest;
+   size_t len = strlen(source);
+   if (len < space) {
        strcpy(dest, source);
        return(dest + len);
    }
-   else {
-       strncpy(dest, source, destEnd - dest);
-       *destEnd = '\0';
-       return(destEnd);
+   else if (space > 0) {
+       strncpy(dest, source, space - 1);
+       dest[space - 1] = '\0';
+       return(dest + space - 1);
    }
+   else return dest;
 }
 
 static char* safeCharAdd(char* dest, char* destEnd, char c)
