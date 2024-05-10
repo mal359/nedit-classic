@@ -897,10 +897,8 @@ static void copyCommandLineArg(CommandLine *commandLine, const char *arg)
 static void printNcVersion(void ) {
    static const char *const ncHelpText = \
    "nedit-client (NEdit) Version 5.7 (January 2017)\n\n\
-     Built on: %s, %s, %s\n\
-     Built at: %s, %s\n";
+     Built on: %s, %s, %s\n";
      
     fprintf(stdout, ncHelpText,
-                  COMPILE_OS, COMPILE_MACHINE, COMPILE_COMPILER,
-                  __DATE__, __TIME__);
+                  COMPILE_OS, COMPILE_MACHINE, COMPILE_COMPILER);
 }

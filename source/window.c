@@ -53,6 +53,7 @@
 #include "nedit.bm"
 #include "n.bm"
 #include "windowTitle.h"
+#include "tabDragDrop.h"
 #include "interpret.h"
 #include "rangeset.h"
 #include "../util/clearcase.h"
@@ -155,7 +156,6 @@ static WindowInfo *getNextTabWindow(WindowInfo *window, int direction,
         int crossWin, int wrap);
 static Widget addTab(Widget folder, const char *string);
 static int compareWindowNames(const void *windowA, const void *windowB);
-static int getTabPosition(Widget tab);
 static Widget manageToolBars(Widget toolBarsForm);
 static void hideTearOffs(Widget menuPane);
 static void CloseDocumentWindow(Widget w, WindowInfo *window, XtPointer callData);
@@ -549,7 +549,7 @@ WindowInfo *CreateWindow(const char *name, char *geometry, int iconic)
 	    XmNmarginHeight, 0,
 	    XmNmarginWidth, 0,
 	    XmNspacing, 0,
-    	    XmNresizable, False, 
+    	    XmNresizable, True,
             XmNleftAttachment, XmATTACH_FORM,
             XmNrightAttachment, XmATTACH_FORM,
 	    XmNshadowThickness, 0, NULL);
@@ -597,6 +597,8 @@ WindowInfo *CreateWindow(const char *name, char *geometry, int iconic)
 
     window->tabMenuPane = CreateTabContextMenu(window->tabBar, window);
     AddTabContextMenuAction(window->tabBar);
+    if (GetPerfDragDropTabs())
+        registerDropSite(window->tabBar);
     
     /* create an unmanaged composite widget to get the folder
        widget to hide the 3D shadow for the manager area.
@@ -865,6 +867,10 @@ static Widget addTab(Widget folder, const char *string)
     AddTabContextMenuAction(tab);
 #endif /* LESSTIF_VERSION */
 
+    if (GetPerfDragDropTabs()) {
+        addTabDragAction(tab);
+        registerDropSite(tab);
+    }
     return tab;
 }
 	    
@@ -2278,6 +2284,9 @@ static Widget createTextArea(Widget parent, WindowInfo *window, int rows,
        operation and performance will be better without it) */
     TextDMaintainAbsLineNum(((TextWidget)text)->text.textD, window->showStats);
    
+    if (GetPerfDragDropTabs())
+        registerDropSite(text);
+
     return text;
 }
 
@@ -3589,7 +3598,7 @@ static WindowInfo *getNextTabWindow(WindowInfo *window, int direction,
 ** return the integer position of a tab in the tabbar it
 ** belongs to, or -1 if there's an error, somehow.
 */
-static int getTabPosition(Widget tab)
+int getTabPosition(Widget tab)
 {
     WidgetList tabList;
     int i, tabCount;
@@ -3647,6 +3656,10 @@ void RefreshTabState(WindowInfo *win)
 	    NULL);
     XmStringFree(s1);
     XmStringFree(tipString);
+
+    /* set tab as active */
+    if (IsTopDocument(win))
+        XmLFolderSetActiveTab(win->tabBar, getTabPosition(win->tab), False);
 }
 
 /*
