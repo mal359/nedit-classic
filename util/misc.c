@@ -401,6 +401,9 @@ Boolean FindBestVisual(Display *display, const char *appName, const char *appCla
 	return (*visual == DefaultVisual(display, screen));
     }
     
+    /* Set "Default" visual to avoid crashes with the detected best ones */
+    reqID = DefaultVisual(display, screen)->visualid;
+    
     /* Read the visualID and installColormap resources for the application.
        visualID can be specified either as a number (the visual id as
        shown by xdpyinfo), as a visual class name, or as Best or Default. */
@@ -1956,12 +1959,12 @@ void AddMouseWheelSupport(Widget w)
     if (XmIsScrolledWindow(XtParent(w))) 
     {
         static const char scrollTranslations[] =
-           "Shift<Btn4Down>,<Btn4Up>: scrolled-window-scroll-up(1)\n"
-           "Shift<Btn5Down>,<Btn5Up>: scrolled-window-scroll-down(1)\n"
-           "Ctrl<Btn4Down>,<Btn4Up>:  scrolled-window-page-up()\n"
-           "Ctrl<Btn5Down>,<Btn5Up>:  scrolled-window-page-down()\n"
-           "<Btn4Down>,<Btn4Up>:      scrolled-window-scroll-up(3)\n"
-           "<Btn5Down>,<Btn5Up>:      scrolled-window-scroll-down(3)\n";
+           "Shift<Btn4Down>: scrolled-window-scroll-up(1)\n"
+           "Shift<Btn5Down>: scrolled-window-scroll-down(1)\n"
+           "Ctrl<Btn4Down>:  scrolled-window-page-up()\n"
+           "Ctrl<Btn5Down>:  scrolled-window-page-down()\n"
+           "<Btn4Down>:      scrolled-window-scroll-up(3)\n"
+           "<Btn5Down>:      scrolled-window-scroll-down(3)\n";
         static XtTranslations trans_table = NULL;
         
         if (trans_table == NULL)

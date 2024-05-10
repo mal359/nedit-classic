@@ -95,6 +95,7 @@ static int checkDoMacroArg(const char *macro);
 static String neditLanguageProc(Display *dpy, String xnl, XtPointer closure);
 static void maskArgvKeywords(int argc, char **argv, const char **maskArgs);
 static void unmaskArgvKeywords(int argc, char **argv, const char **maskArgs);
+static void changeLocaleIfUTF8(void);
 static void fixupBrokenXKeysymDB(void);
 static void patchResourcesForVisual(void);
 static void patchResourcesForKDEbug(void);
@@ -435,6 +436,8 @@ int main(int argc, char **argv)
 
     /* Save the command which was used to invoke nedit for restart command */
     ArgV0 = argv[0];
+
+    changeLocaleIfUTF8();
 
     /* Set locale for C library, X, and Motif input functions. 
        Reverts to "C" if requested locale not available. */
@@ -1151,6 +1154,32 @@ static String neditLanguageProc(Display *dpy, String xnl, XtPointer closure)
         XtWarning("X locale modifiers not supported, using default");
 
     return setlocale(LC_ALL, NULL); /* re-query in case overwritten */
+}
+
+static void changeLocaleIfUTF8(void)
+{
+    char *locale;
+
+    locale = getenv("LANG");
+    if (!locale) {
+        locale = setlocale(LC_ALL, NULL);
+    }
+
+    if (locale) {
+        char *ptr;
+
+        ptr = strstr(locale, ".UTF-8");
+        if (ptr) {
+            fprintf(stderr, "nedit: the current locale is utf8 (%s)\n", locale);
+
+            ptr[0] = '\0';
+
+            setenv("LC_ALL", locale, 1);
+            locale = setlocale(LC_ALL, locale);
+
+            fprintf(stderr, "nedit: changed locale to non-utf8 (%s)\n", locale);
+        }
+    }
 }
 
 static int sortAlphabetical(const void* k1, const void* k2)
