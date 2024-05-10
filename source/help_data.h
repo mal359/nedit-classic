@@ -5036,7 +5036,7 @@ static char * htxt_server [] = {
 "Communication between nedit-client and nedit is done through the X display. So ",
 "as long as the X Window System is set up and working properly, nedit-client ",
 "will work properly as well. nedit-client uses the DISPLAY environment variable, ",
-the machine name, and your user name to find the appropriate server, meaning, if ",
+"the machine name, and your user name to find the appropriate server, meaning, if ",
 "you have several machines sharing a common file system, nedit-client will not ",
 "be able to find a server that is running on a machine with a different host ",
 "name, even though it may be perfectly appropriate for editing a given file. ",
