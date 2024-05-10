@@ -82,7 +82,7 @@ Getting Started
 ..
 ..   NEdit is a single stand-alone executable file which can be installed by simply
 ..   copying the appropriate executable "nedit" for your system.  Both sources and
-..   executables are available from http://www.nedit.org.  The optional "nc" (NEdit
+..   executables are available from http://www.nedit.org.  The optional "nedit-client" (NEdit
 ..   Client) program is also available for users who want to run nedit in
 ..   client/server mode.
 ..
@@ -954,8 +954,8 @@ Programming with NEdit
   the client server interface.  These tools allow you to click directly on
   compiler and runtime error messages and request NEdit to open files, and select
   lines of interest.  The easiest method is usually to use the tool's interface
-  for character-based editors like vi, to invoke nc, but programmatic interfaces
-  can also be derived using the source code for nc.
+  for character-based editors like vi, to invoke nedit-client, but programmatic interfaces
+  can also be derived using the source code for nedit-client.
 
   There are also some simple compile/review, grep, ctree, and ctags browsers
   available in the NEdit contrib directory on ftp.nedit.org.
@@ -4441,12 +4441,12 @@ X Resources
 
 **nc.autoStart**: True 
 
-  Whether the nc program should automatically start an NEdit server (without
-  prompting the user) if an appropriate server is not found.
+  Whether the nedit-client program should automatically start an NEdit server 
+  (without prompting the user) if an appropriate server is not found.
 
 **nc.serverCommand**: nedit -server
 
-  Command used by the nc program to start an NEdit server.
+  Command used by the nedit-client program to start an NEdit server.
 
 **nc.timeOut**: 10
 
@@ -4845,14 +4845,15 @@ NEdit Command Line
 
 **-server**
   Designate this session as an NEdit server, for processing commands from the
-  nc program.  nc can be used to interface NEdit to code development
-  environments, mailers, etc., or just as a quick way to open files from the
-  shell command line without starting a new NEdit session.
+  nedit-client program.  nedit-client can be used to interface NEdit to code 
+  development environments, mailers, etc., or just as a quick way to open files 
+  from the shell command line without starting a new NEdit session.
 
 **-do command**
   Execute an NEdit macro or action on the file following the -do argument on
-  the command line. -do is particularly useful from the nc program, where
-  nc -do can remotely execute commands in an NEdit -server session.
+  the command line. -do is particularly useful from the nedit-client program, 
+  where nedit-client -do can remotely execute commands in an NEdit -server 
+  session.
 
 **-tags file**
   Load a file of directions for finding definitions of program subroutines and
@@ -4938,10 +4939,10 @@ NEdit Command Line
 
 **-svrname name**
   When starting NEdit in server mode, name the server, such that it responds to
-  requests only when nc is given a corresponding -svrname argument.  By naming
-  servers, you can run several simultaneously, and direct files and commands
-  specifically to any one. Specifying a non-empty name automatically designates
-  this session as an NEdit server, as though -server were specified.
+  requests only when nedit-client is given a corresponding -svrname argument.  
+  By naming servers, you can run several simultaneously, and direct files and 
+  commands specifically to any one. Specifying a non-empty name automatically 
+  designates this session as an NEdit server, as though -server were specified.
 
 **-import file**
   Loads an additional preferences file on top of the existing defaults saved in
@@ -4981,15 +4982,16 @@ NEdit Command Line
   Go to line #n
 
 **/server**
-  Designate this session as an NEdit server for processing commands from the nc
-  program. The nc program can be used to interface NEdit to code development
-  environments, mailers, etc., or just as a quick way to open files from the
-  shell command line without starting a new NEdit session.
+  Designate this session as an NEdit server for processing commands from the 
+  nedit-client program. The nedit-client program can be used to interface NEdit
+  to code development environments, mailers, etc., or just as a quick way to 
+  open files from the shell command line without starting a new NEdit session.
 
 **/do=command**
   Execute an NEdit action routine. on each file following the /do argument on
-  the command line.  /do is particularly useful from the nc program, where nc
-  /do can remotely execute commands in an nedit /server session.
+  the command line.  /do is particularly useful from the nedit-client program, 
+  where nedit-client /do can remotely execute commands in an nedit /server 
+  session.
 
 **/tags=file**
   Load a file of directions for finding definitions of program subroutines and
@@ -5061,9 +5063,9 @@ NEdit Command Line
 
 **/svrname=name**
   When starting nedit in server mode, name the server, such that it responds to
-  requests only when nc is given a corresponding -svrname argument.  By naming
-  servers, you can run several simultaneously, and direct files and commands
-  specifically to any one.
+  requests only when nedit-client is given a corresponding -svrname argument.  
+  By naming servers, you can run several simultaneously, and direct files and 
+  commands specifically to any one.
 
 **/import=file**
   Loads an additional preferences file on top of the existing defaults saved in
@@ -5096,19 +5098,19 @@ Client/Server Mode
       nedit -server
 
   NEdit can also be started in server mode via the NEdit Client program
-  (**nc**) when no servers are available.
+  (**nedit-client**) when no servers are available.
 
-  The nc program, which is distributed along with NEdit, sends commands to
-  an NEdit server to open files or execute editor actions. It can also be
-  used on files that are already opened.
+  The nedit-client program, which is distributed along with NEdit, sends 
+  commands to an NEdit server to open files or execute editor actions. It can 
+  also be used on files that are already opened.
 
-  Listing a file on the nc command line means: Open it if it is not already
-  open and bring the window to the front.
+  Listing a file on the nedit-client command line means: Open it if it is not 
+  already open and bring the window to the front.
 
 
-  nc supports the following command line options:
+  nedit-client supports the following command line options:
 
-    **nc** [**-read**] [**-create**]
+    **nedit-client** [**-read**] [**-create**]
        [**-line** n | **+**n] [**-do** command] [**-lm** languagemode]
        [**-svrname** name] [**-svrcmd** command]
        [**-ask**] [**-noask**] [**-timeout** seconds]
@@ -5132,26 +5134,26 @@ Client/Server Mode
   Execute an NEdit macro or action on the file following the -do argument
   on the command line.
 
-  If you use this command without a filename, nc would randomly choose one
-  window to focus and execute the macro in.
+  If you use this command without a filename, nedit-client would randomly 
+  choose one window to focus and execute the macro in.
 
 **-lm** languagemode
   Initial language mode used.
 
 **-svrname** name
-  Explicitly instructs nc which server to connect to, an instance of
+  Explicitly instructs nedit-client which server to connect to, an instance of
   nedit(1) with a corresponding -svrname argument.  By naming servers, you
   can run several simultaneously, and direct files and commands
   specifically to any one.
 
 **-svrcmd** command
-  The command which nc uses to start an NEdit server. It is also settable
-  via the X resource `nc.serverCommand' (see X_Resources_). Defaults to
+  The command which nedit-client uses to start an NEdit server. It is also 
+  settable via the X resource `nc.serverCommand' (see X_Resources_). Defaults to
   "nedit -server".
 
 **-ask**, **-noask**
-  Instructs nc to automatically start a server if one is not available.  This
-  overrides the X resource `nc.autoStart' (see X_Resources_).
+  Instructs nedit-client to automatically start a server if one is not 
+  available.  This overrides the X resource `nc.autoStart' (see X_Resources_).
 
 **-timeout** seconds
   Basic time-out period used in communication with an NEdit server.  The
@@ -5177,20 +5179,21 @@ Client/Server Mode
   Open all subsequent files as tabs in a new window.
 
 **-wait**
-  Instructs nc not to return to the shell until all files given are closed.
+  Instructs nedit-client not to return to the shell until all files given are 
+  closed.
 
-  Normally, nc returns once the files given in its command line are opened
-  by the server. When this option is given, nc returns only after the last
-  file given in this call is closed.
+  Normally, nedit-client returns once the files given in its command line are 
+  opened by the server. When this option is given, nedit-client returns only 
+  after the last file given in this call is closed.
 
   Note that this option affects all files in the command line, not only the
   ones following this option.
 
-  Note that nc will wait for all files given in the command line, even if
-  the files were already opened.
+  Note that nedit-client will wait for all files given in the command line, 
+  even if the files were already opened.
 
 **-version**, **-V**
-  Prints nc's version and build information.
+  Prints nedit-client's version and build information.
 
 **-xrm** resourcestring
   Contains the resourcestring passed to a newly started server. This option
@@ -5205,8 +5208,8 @@ Client/Server Mode
   In typical Unix style, arguments affect the files which follow them on the
   command line, for example:
 
-      incorrect:   nc file.c -line 25
-      correct:     nc -line 25 file.c
+      incorrect:   nedit-client file.c -line 25
+      correct:     nedit-client -line 25 file.c
 
   -read, -create, and -line affect all of the files which follow them on the
   command line.
@@ -5223,24 +5226,25 @@ Client/Server Mode
 
   Sometimes it is useful to have more than one NEdit server running, for
   example to keep mail and programming work separate.  The option, -svrname, to
-  both nedit and nc, allows you to start, and communicate with, separate named
-  servers.  A named server responds only to requests with the corresponding
-  -svrname argument.  If you use ClearCase and are within a ClearCase view, the
-  server name will default to the name of the view (based on the value of the
-  CLEARCASE_ROOT environment variable).
+  both nedit and nedit-client, allows you to start, and communicate with, 
+  separate named servers.  A named server responds only to requests with the 
+  corresponding -svrname argument.  If you use ClearCase and are within a 
+  ClearCase view, the server name will default to the name of the view (based on
+  the value of the CLEARCASE_ROOT environment variable).
 
 4>Communication
 
-  Communication between nc and nedit is done through the X display. So as long
-  as the X Window System is set up and working properly, nc will work properly
-  as well. nc uses the DISPLAY environment variable, the machine name and your
-  user name to find the appropriate server, meaning, if you have several
-  machines sharing a common file system, nc will not be able to find a server
-  that is running on a machine with a different host name, even though it may
-  be perfectly appropriate for editing a given file.
+  Communication between nedit-client and nedit is done through the X display. So
+  as long as the X Window System is set up and working properly, nedit-client 
+  will work properly as well. nedit-client uses the DISPLAY environment 
+  variable, the machine name, and your user name to find the appropriate server.
+  Meaning that if you have several machines sharing a common file system, 
+  nedit-client will not be able to find a server that is running on a machine 
+  with a different host name, even though it may be perfectly appropriate for 
+  editing a given file.
 
-  The command which nc uses to start an nedit server is settable via the X
-  resource nc.serverCommand, by default, "nedit -server".
+  The command which nedit-client uses to start an nedit server is settable via 
+  the X resource nc.serverCommand, by default, "nedit -server".
    ----------------------------------------------------------------------
 
 Crash Recovery

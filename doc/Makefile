@@ -15,7 +15,7 @@ instructions:
 	@ echo "of the NEdit help documentation and internal help code using"
 	@ echo "one common source, help.etx, a Structure Enhanced TEXT document."
 	@ echo ""
-	@ echo "Additionally, it generates the nedit and nc man pages."
+	@ echo "Additionally, it generates the nedit and nedit-client man pages."
 	@ echo "To generate those you need to have perl and pod2man installed."
 	@ echo ""
 	@ echo "The following are the main targets which generate files for"
@@ -23,7 +23,7 @@ instructions:
 	@ echo ""
 	@ echo "  help - generates NEdit help code (help_topic.h, help_data.h)"
 	@ echo "  doc  - generates various forms of NEdit documentation"
-	@ echo "  man  - generates the nedit and nc man pages"
+	@ echo "  man  - generates the nedit and nedit-client man pages"
 	@ echo "  all  - generates all the files"
 	@ echo ""
 	@ echo "Remember to specify the VERSION macro on the make command"
@@ -72,7 +72,7 @@ nedit.doc: .version help.etx setext
 	@ echo "Creating NEdit plain text documenation..."
 	@ ./setext -c NEDITDOC -v version="`cat .version`" help.etx nedit.doc
 
-nc.man: .version
+nedit-client.man: .version
 nedit.man: .version
 .pod.man:
 	@ echo "Creating $* man page..."
@@ -81,13 +81,13 @@ nedit.man: .version
 
 doc: .version nedit.doc nedit.html html/nedit.html
 
-man: .version nedit.man nc.man
+man: .version nedit.man nedit-client.man
 
 all: help doc man
 
 clean:
 	@ echo "Removing generated NEdit documentation..."
-	@ rm -rf help nedit.html html nedit.doc .version nedit.man nc.man
+	@ rm -rf help nedit.html html nedit.doc .version nedit.man nedit-client.man
 
 #
 # FAQ targets. Requires an XSLT parser and processor, such as Java with the
