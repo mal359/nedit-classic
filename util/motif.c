@@ -151,7 +151,7 @@ static enum MotifStability GetOpenMotifStability(void)
     {
         result = MotifKnownBad;
     }
-    else if (XmFullVersion >= 200203 && XmFullVersion <= 200304) /* 2.2.3 - 2.3 is good */
+    else if (XmFullVersion >= 200203 && XmFullVersion <= 200308) /* 2.2.3 - 2.3.8 are good */
     {
         result = MotifKnownGood;
     }
@@ -191,6 +191,7 @@ const char *GetMotifStableVersions(void)
     strcat(msg, "OpenMotif 2.2.3\n");
     strcat(msg, "OpenMotif 2.3\n");
     strcat(msg, "OpenMotif 2.3.4\n");
+    strcat(msg, "Motif 2.3.8\n");
 
     return msg;
 }
