@@ -50,6 +50,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #ifdef VMS
 #include "../util/VMSparam.h"
 #else

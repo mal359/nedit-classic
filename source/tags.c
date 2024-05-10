@@ -1808,6 +1808,10 @@ static int loadTipsFile(const char *tipsFile, int index, int recLevel)
     int nTipsAdded=0, langMode = PLAIN_LANGUAGE_MODE, oldLangMode;
     int currLine=0, code, blkLine;
     tf_alias *aliases=NULL, *tmp_alias;
+
+    /* silence gcc 4.5 warnings */
+    body = NULL;
+    blkLine = 0;
     
     if(recLevel > MAX_TAG_INCLUDE_RECURSION_LEVEL) {
         fprintf(stderr, "nedit: Warning: Reached recursion limit before loading calltips file:\n\t%s\n", tipsFile);

@@ -51,6 +51,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdint.h>
 #ifdef VMS
 #include "../util/VMSparam.h"
 #else
@@ -1118,7 +1119,7 @@ static void dimSelDepItemsInMenu(Widget menuPane, menuItemRec **menuList,
 	    	XtVaGetValues(items[n], XmNsubMenuId, &subMenu, NULL);
 		dimSelDepItemsInMenu(subMenu, menuList, nMenuItems, sensitive);
 	    } else {
-		index = (int)(intptr_t)userData - 10;
+		index = (intptr_t)userData - 10;
 		if (index <0 || index >= nMenuItems)
     		    return;
 		if (menuList[index]->input == FROM_SELECTION)
@@ -2885,7 +2886,7 @@ static void generateAcceleratorString(char *text, unsigned int modifiers,
     /* for a consistent look to the accelerator names in the menus,
        capitalize the first letter of the keysym */
     strcpy(keyName, XKeysymToString(keysym));
-    *keyName = toupper(*keyName);
+    *keyName = toupper((unsigned char)*keyName);
     
     /* concatenate the strings together */
     sprintf(text, "%s%s%s%s%s%s%s%s", shiftStr, ctrlStr, altStr, 
@@ -2967,7 +2968,7 @@ static int parseAcceleratorString(const char *string, unsigned int *modifiers,
        of the keysyms are "prettied up" by generateAcceleratorString */
     *keysym = XStringToKeysym(fields[nFields-1]);
     if (*keysym == NoSymbol) {
-    	*fields[nFields-1] = tolower(*fields[nFields-1]);
+    	*fields[nFields-1] = tolower((unsigned char)*fields[nFields-1]);
     	*keysym = XStringToKeysym(fields[nFields-1]);
     	if (*keysym == NoSymbol)
     	    return False;

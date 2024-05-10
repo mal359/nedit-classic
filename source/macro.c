@@ -63,6 +63,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
+#include <stdint.h>
 #ifdef VMS
 #include <limits.h>
 #include "../util/VMSparam.h"

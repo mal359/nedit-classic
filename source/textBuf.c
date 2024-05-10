@@ -1610,6 +1610,9 @@ static void deleteRect(textBuffer *buf, int start, int end, int rectStart,
 {
     int nLines, lineStart, lineEnd, len, endOffset;
     char *outStr, *outPtr, *line, *text, *expText;
+
+    /* this may be needed if the region is empty */
+    endOffset = 0;
     
     /* allocate a buffer for the replacement string large enough to hold 
        possibly expanded tabs as well as an additional  MAX_EXP_CHAR_LEN * 2
@@ -2016,6 +2019,9 @@ static char *getSelectionText(textBuffer *buf, selection *sel)
 {
     int start, end, isRect, rectStart, rectEnd;
     char *text;
+
+    /* silence bogus uninitialized variable warning from gcc 4.5 */
+    rectStart = rectEnd = 0;
     
     /* If there's no selection, return an allocated empty string */
     if (!getSelectionPos(sel, &start, &end, &isRect, &rectStart, &rectEnd)) {
@@ -2036,6 +2042,9 @@ static void removeSelected(textBuffer *buf, selection *sel)
     int start, end;
     int isRect, rectStart, rectEnd;
     
+    /* silence bogus uninitialized variable warning from gcc 4.5 */
+    rectStart = rectEnd = 0;
+    
     if (!getSelectionPos(sel, &start, &end, &isRect, &rectStart, &rectEnd))
     	return;
     if (isRect)
@@ -2048,6 +2057,9 @@ static void replaceSelected(textBuffer *buf, selection *sel, const char *text)
 {
     int start, end, isRect, rectStart, rectEnd;
     selection oldSelection = *sel;
+
+    /* silence bogus uninitialized variable warning from gcc 4.5 */
+    rectStart = rectEnd = 0;
     
     /* If there's no selection, return */
     if (!getSelectionPos(sel, &start, &end, &isRect, &rectStart, &rectEnd))

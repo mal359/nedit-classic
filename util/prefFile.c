@@ -35,6 +35,7 @@
 #include "utils.h"
 #include "nedit_malloc.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

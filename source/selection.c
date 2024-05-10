@@ -572,7 +572,7 @@ void AddMark(WindowInfo *window, Widget widget, char label)
     
     /* look for a matching mark to re-use, or advance
        nMarks to create a new one */
-    label = toupper(label);
+    label = toupper((unsigned char)label);
     for (index=0; index<window->nMarks; index++) {
     	if (window->markTable[index].label == label)
    	    break;
@@ -597,7 +597,7 @@ void GotoMark(WindowInfo *window, Widget w, char label, int extendSel)
     selection *sel, *oldSel;
     
     /* look up the mark in the mark table */
-    label = toupper(label);
+    label = toupper((unsigned char)label);
     for (index=0; index<window->nMarks; index++) {
     	if (window->markTable[index].label == label)
    	    break;

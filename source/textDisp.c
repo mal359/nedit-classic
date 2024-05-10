@@ -1562,6 +1562,9 @@ static void bufModifiedCB(int pos, int nInserted, int nDeleted,
     int oldFirstChar = textD->firstChar;
     int scrolled, origCursorPos = textD->cursorPos;
     int wrapModStart, wrapModEnd;
+
+    /* silence bogus uninitialized variable warning from gcc 4.5 */
+    wrapModStart = wrapModEnd = -1;
  
     /* buffer modification cancels vertical cursor motion column */
     if (nInserted != 0 || nDeleted != 0)

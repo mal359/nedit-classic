@@ -188,6 +188,10 @@ void BlockDragSelection(TextWidget tw, int x, int y, int dragType)
     if (tw->text.dragState != PRIMARY_BLOCK_DRAG)
     	return;
 
+    /* gcc 4.5 warns that these are uninitialized, not clear if it's right */
+    tempModRangeEnd = -1;
+    bufModRangeEnd = -1;
+
     /* The operation of block dragging is simple in theory, but not so simple
        in practice.  There is a backup buffer (tw->text.dragOrigBuf) which
        holds a copy of the buffer as it existed before the drag.  When the
