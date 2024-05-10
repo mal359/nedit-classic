@@ -68,7 +68,7 @@
 #include "../debug.h"
 #endif
 
-#define APP_NAME "nc"
+#define APP_NAME "nedit-client"
 #define APP_CLASS "NEditClient"
 
 #define PROPERTY_CHANGE_TIMEOUT (Preferences.timeOut * 1000) /* milliseconds */
@@ -110,15 +110,15 @@ static const char cmdLineHelp[] =
 #ifdef VMS
 "[Sorry, no on-line help available.]\n"; /* Why is that ? */
 #else
-"Usage:  nc [-read] [-create]\n"
-"           [-line n | +n] [-do command] [-lm languagemode]\n"
-"           [-svrname name] [-svrcmd command]\n"
-"           [-ask] [-noask] [-timeout seconds]\n"
-"           [-geometry geometry | -g geometry] [-icon | -iconic]\n"
-"           [-tabbed] [-untabbed] [-group] [-wait]\n"
-"           [-V | -version] [-h|-help]\n"
-"           [-xrm resourcestring] [-display [host]:server[.screen]]\n"
-"           [--] [file...]\n";
+"Usage:  nedit-client [-read] [-create]\n"
+"           	      [-line n | +n] [-do command] [-lm languagemode]\n"
+"           	      [-svrname name] [-svrcmd command]\n"
+"          	      [-ask] [-noask] [-timeout seconds]\n"
+"           	      [-geometry geometry | -g geometry] [-icon | -iconic]\n"
+"           	      [-tabbed] [-untabbed] [-group] [-wait]\n"
+"           	      [-V | -version] [-h|-help]\n"
+"           	      [-xrm resourcestring] [-display [host]:server[.screen]]\n"
+"           	      [--] [file...]\n";
 #endif /*VMS*/
 
 /* Structure to hold X Resource values */
@@ -227,7 +227,7 @@ int main(int argc, char **argv)
     TheDisplay = XtOpenDisplay (context, NULL, APP_NAME, APP_CLASS, NULL,
     	    0, &argc, argv);
     if (!TheDisplay) {
-	XtWarning ("nc: Can't open display\n");
+	XtWarning ("nedit-client: Can't open display\n");
 	exit(EXIT_FAILURE);
     }
     rootWindow = RootWindow(TheDisplay, DefaultScreen(TheDisplay));
@@ -533,8 +533,8 @@ static int startServer(const char *message, const char *commandLineArgs)
 }
 
 /* Reconstruct the command line in string commandLine in case we have to
- * start a server (nc command line args parallel nedit's).  Include
- * -svrname if nc wants a named server, so nedit will match. Special
+ * start a server (nedit-client command line args parallel nedit's).  Include
+ * -svrname if nedit-client wants a named server, so nedit will match. Special
  * characters are protected from the shell by escaping EVERYTHING with \
  */
 static CommandLine processCommandLine(int argc, char** argv)
@@ -552,7 +552,7 @@ static CommandLine processCommandLine(int argc, char** argv)
     /* Convert command line arguments into a command string for the server */
     parseCommandLine(argc, argv, &commandLine);
     if (commandLine.serverRequest == NULL) {
-        fprintf(stderr, "nc: Invalid commandline argument\n");
+        fprintf(stderr, "nedit-client: Invalid commandline argument\n");
 	exit(EXIT_FAILURE);
     }
 
@@ -627,13 +627,13 @@ static void parseCommandLine(int argc, char **argv, CommandLine *commandLine)
     	    nextArg(argc, argv, &i);
 	    nRead = sscanf(argv[i], "%d", &lineArg);
 	    if (nRead != 1)
-    		fprintf(stderr, "nc: argument to line should be a number\n");
+    		fprintf(stderr, "nedit-client: argument to line should be a number\n");
     	    else
     	    	lineNum = lineArg;
     	} else if (opts && (*argv[i] == '+')) {
     	    nRead = sscanf((argv[i]+1), "%d", &lineArg);
 	    if (nRead != 1)
-    		fprintf(stderr, "nc: argument to + should be a number\n");
+    		fprintf(stderr, "nedit-client: argument to + should be a number\n");
     	    else
     	    	lineNum = lineArg;
     	} else if (opts && (!strcmp(argv[i], "-ask") || !strcmp(argv[i], "-noask"))) {
@@ -657,7 +657,7 @@ static void parseCommandLine(int argc, char **argv, CommandLine *commandLine)
 #ifdef VMS
 	    *argv[i] = '/';
 #endif /*VMS*/
-    	    fprintf(stderr, "nc: Unrecognized option %s\n%s", argv[i],
+    	    fprintf(stderr, "nedit-client: Unrecognized option %s\n%s", argv[i],
     	    	    cmdLineHelp);
     	    exit(EXIT_FAILURE);
     	} else {
@@ -851,14 +851,14 @@ static void nextArg(int argc, char **argv, int *argIndex)
 #ifdef VMS
 	    *argv[*argIndex] = '/';
 #endif /*VMS*/
-    	fprintf(stderr, "nc: %s requires an argument\n%s",
+    	fprintf(stderr, "nedit-client: %s requires an argument\n%s",
 	        argv[*argIndex], cmdLineHelp);
     	exit(EXIT_FAILURE);
     }
     (*argIndex)++;
 }
 
-/* Copies a given nc command line argument to the server startup command
+/* Copies a given nedit-client command line argument to the server startup command
 ** line (-icon, -geometry, -xrm, ...) Special characters are protected from
 ** the shell by escaping EVERYTHING with \ 
 ** Note that the .shell string in the command line structure is large enough
@@ -893,10 +893,10 @@ static void copyCommandLineArg(CommandLine *commandLine, const char *arg)
 #endif /* VMS */
 }
 
-/* Print version of 'nc' */
+/* Print version of 'nedit-client' */
 static void printNcVersion(void ) {
    static const char *const ncHelpText = \
-   "nc (NEdit) Version 5.7 (January 2017)\n\n\
+   "nedit-client (NEdit) Version 5.7 (January 2017)\n\n\
      Built on: %s, %s, %s\n\
      Built at: %s, %s\n";
      
