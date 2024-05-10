@@ -9,7 +9,7 @@ SHELL=/bin/sh
 #   make solaris
 #
 # This builds an intermediate library in the util/ directory,
-# then builds the nedit and nc executables in the source/ directory.
+# then builds the nedit and nedit-client executables in the source/ directory.
 #
 
 all:
@@ -31,7 +31,7 @@ all:
 	    $(MAKE) -f Makefile.$@ libNUtil.a)
 	(cd Xlt;    $(MAKE) -f Makefile.$@ libXlt.a)
 	(cd Microline/XmL;    $(MAKE) -f Makefile.$@ libXmL.a)
-	(cd source; $(MAKE) -f Makefile.$@ nedit nc)
+	(cd source; $(MAKE) -f Makefile.$@ nedit nedit-client)
 	@source/nedit -V
 
 # This should not be in the default build, as users may not have Perl
@@ -56,14 +56,14 @@ realclean: clean
 # The following is for creating binary packages of NEdit.
 #
 RELEASE=nedit-5.7-`uname -s`-`uname -m`
-BINDIST-FILES=source/nedit source/nc README COPYRIGHT ReleaseNotes doc/nedit.doc doc/nedit.html doc/nedit.man doc/nc.man doc/faq.txt
+BINDIST-FILES=source/nedit source/nedit-client README COPYRIGHT ReleaseNotes doc/nedit.doc doc/nedit.html doc/nedit.man doc/nedit-client.man doc/faq.txt
 
 dist-bin: $(BINDIST-FILES)
 	rm -rf $(RELEASE)
 	mkdir -p $(RELEASE)
 	cp $(BINDIST-FILES) $(RELEASE)/
-	strip $(RELEASE)/nedit $(RELEASE)/nc
-	chmod 555 $(RELEASE)/nedit $(RELEASE)/nc
+	strip $(RELEASE)/nedit $(RELEASE)/nedit-client
+	chmod 555 $(RELEASE)/nedit $(RELEASE)/nedit-client
 	tar cf $(RELEASE).tar $(RELEASE)
 	compress -c $(RELEASE).tar > $(RELEASE).tar.Z
 	-gzip -9 -c $(RELEASE).tar > $(RELEASE).tar.gz
